@@ -95,7 +95,7 @@ function get_operatorResultStr() {
     //   2. 使用 parseFloat() 方法，將 newValueNum.toPrecision(12)，在轉型成數字型別，就會過濾掉小數點後面的 0
     // return newValueNum.toString();
     return parseFloat(newValueNum.toPrecision(12)).toString();
-}
+};
 
 
 // 處理輸出資料轉換
@@ -121,6 +121,10 @@ function set_outputValStr(valueStr) {
         // 如果沒有小數點後面數字字串的話，維持原本數字字串
         output_val.textContent = parseFloat(wholeNumStr).toLocaleString();
     }
+
+
+    // 檢驗目前計算機字串的資料長度
+    checkStrLength(valueStr);
 };
 
 
@@ -138,9 +142,6 @@ function numberPress(numStr) {
 
         // 如果當前資料狀態不是 0 的話，將 '當前數字字串' 和 '點擊到數字字串'相加
         set_outputValStr(currentValStr + numStr);
-
-        // 檢驗目前計算機字串的資料長度
-        checkStrLength(currentValStr + numStr);
     };
 };
 
@@ -179,10 +180,12 @@ function checkStrLength(valueStr) {
 
     let trim_string = valueStr.replace(/[\W_]/g, ''); //把非數字字串都去除掉，回傳純數字字串
     let valueStr_length = trim_string.length;
+    console.log(valueStr_length);
 
     // 字串長度超過六以上就改變 文字大小
-    if (valueStr_length > 6) {
-        output_val.style.fontSize = '50px';
+    if (valueStr_length > 6 && valueStr_length <= 9) {
+        output_val.style.fontSize = '40px';
+        output_val.style.overflow = 'hidden';
     };
 }
 
@@ -280,7 +283,6 @@ equal_btn.addEventListener('click', () => {
         storeOperator = null;
     };
 });
-
 
 
 
