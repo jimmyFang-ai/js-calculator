@@ -52,12 +52,6 @@ function update_time() {
 
 
 
-
-
-
-
-
-
 // 製作計算機
 
 // 取得輸出欄位字串資料
@@ -83,6 +77,7 @@ function get_operatorResultStr() {
     // 宣告新數字值變數
     let newValueNum;
 
+
     if (storeOperator === 'plus') {
         newValueNum = storeValNum + currentOutputNum;
     } else if (storeOperator === 'minus') {
@@ -91,11 +86,15 @@ function get_operatorResultStr() {
         newValueNum = storeValNum * currentOutputNum;
     } else if (storeOperator === 'divide') {
         newValueNum = storeValNum / currentOutputNum;
-    }
+    };
 
 
-    // 回傳運算後結果並轉為字串型別
-    return newValueNum.toString();
+    //  回傳運算後結果並轉為字串型別
+    //  計算 JS小數精度運算
+    //   1. toPrecision()方法，將數字型別內的小數點後的數字，設定有效位數12位， 超過的部分會四捨五入，最後會回傳String型態資料
+    //   2. 使用 parseFloat() 方法，將 newValueNum.toPrecision(12)，在轉型成數字型別，就會過濾掉小數點後面的 0
+    // return newValueNum.toString();
+    return parseFloat(newValueNum.toPrecision(12)).toString();
 }
 
 
@@ -136,8 +135,12 @@ function numberPress(numStr) {
     if (currentValStr === '0') {
         set_outputValStr(numStr);
     } else {
+
         // 如果當前資料狀態不是 0 的話，將 '當前數字字串' 和 '點擊到數字字串'相加
         set_outputValStr(currentValStr + numStr);
+
+        // 檢驗目前計算機字串的資料長度
+        checkStrLength(currentValStr + numStr);
     };
 };
 
@@ -165,11 +168,29 @@ function operatorPress(operation) {
 };
 
 
+// 檢驗目前計算機字串的資料長度
+function checkStrLength(valueStr) {
+
+    //正規表達式 
+    // String.prototype.replace()：取代內容，回傳置換後的新字串，不會改變原本的字串
+    // /.../g  全域匹配，只要符合就會回傳
+    // [ ] 比對中括號內任意字元
+    // \W 匹配所有非文字字元(標點符號、特殊字元)
+
+    let trim_string = valueStr.replace(/[\W_]/g, ''); //把非數字字串都去除掉，回傳純數字字串
+    let valueStr_length = trim_string.length;
+
+    // 字串長度超過六以上就改變 文字大小
+    if (valueStr_length > 6) {
+        output_val.style.fontSize = '50px';
+    };
+}
 
 
 
 
-// 監聽事件
+//------------- 監聽事件 -------------------
+
 // 所有數字按鈕綁定監聽
 numberBtns.forEach((btn) => {
     btn.addEventListener('click', (e) => {
@@ -252,13 +273,18 @@ equal_btn.addEventListener('click', () => {
     // 如果按下等於按鈕，有儲存字串資料的話，就回傳運算結果
     if (storeValStr) {
         set_outputValStr(get_operatorResultStr());
-  
-        console.log(storeValStr,storeOperator);
+
+        console.log(storeValStr, storeOperator);
         //按下等於並清空暫存 字串和運算符
         storeValStr = null;
         storeOperator = null;
     };
 });
+
+
+
+
+
 
 
 
