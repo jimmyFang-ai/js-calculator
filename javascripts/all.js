@@ -32,16 +32,15 @@ let storeOperator = null;
 
 
 
-// 初始化
-function init() {
-
+// 製作手機時間
+// 網頁初始化
+window.onload = function () {
+    update_time();
     //重覆每秒執行時間更新
     setInterval(update_time, 1000);
 };
-init();
 
 
-// 製作手機時間
 function update_time() {
     // 使用 toLocaleString()方法 取得台灣本地當前日期時間
     const currentTime = new Date().toLocaleString("zh-TW", { hour12: false, timeStyle: "short" });
@@ -49,6 +48,7 @@ function update_time() {
     // 呈現目前時間
     phone_clock.innerHTML = `<span>${currentTime}</span>`;
 };
+
 
 
 
@@ -65,7 +65,6 @@ function get_outputValNum() {
     //將輸出欄位字串型別轉型成數字型別
     return parseFloat(get_outputValStr());
 };
-
 
 // 取得運算結果資料
 function get_operatorResultStr() {
@@ -93,7 +92,6 @@ function get_operatorResultStr() {
     //  計算 JS小數精度運算
     //   1. toPrecision()方法，將數字型別內的小數點後的數字，設定有效位數12位， 超過的部分會四捨五入，最後會回傳String型態資料
     //   2. 使用 parseFloat() 方法，將 newValueNum.toPrecision(12)，在轉型成數字型別，就會過濾掉小數點後面的 0
-    // return newValueNum.toString();
     return parseFloat(newValueNum.toPrecision(12)).toString();
 };
 
@@ -106,7 +104,6 @@ function set_outputValStr(valueStr) {
         output_val.textContent += '.';
         return;
     }
-
 
     // 處理小數點後面點擊新的數字按鈕會被進位
     // 解決方法將小數點前後數字字串分切處理
@@ -124,7 +121,7 @@ function set_outputValStr(valueStr) {
 
 
     // 檢驗目前計算機字串的資料長度
-    checkStrLength(valueStr);
+    changeStrSize(valueStr);
 };
 
 
@@ -170,7 +167,7 @@ function operatorPress(operation) {
 
 
 // 檢驗目前計算機字串的資料長度
-function checkStrLength(valueStr) {
+function changeStrSize(valueStr) {
 
     //正規表達式 
     // String.prototype.replace()：取代內容，回傳置換後的新字串，不會改變原本的字串
@@ -180,13 +177,21 @@ function checkStrLength(valueStr) {
 
     let trim_string = valueStr.replace(/[\W_]/g, ''); //把非數字字串都去除掉，回傳純數字字串
     let valueStr_length = trim_string.length;
+
     console.log(valueStr_length);
 
     // 字串長度超過六以上就改變 文字大小
-    if (valueStr_length > 6 && valueStr_length <= 9) {
+    if (valueStr_length >= 9) {
         output_val.style.fontSize = '40px';
+    } else if (valueStr_length === 8) {
+        output_val.style.fontSize = '45px';
+    } else if (valueStr_length === 7) {
+        output_val.style.fontSize = '50px';
+    } else {
+        output_val.style.fontSize = '60px';
     };
-}
+};
+
 
 
 
@@ -196,8 +201,26 @@ function checkStrLength(valueStr) {
 // 所有數字按鈕綁定監聽
 numberBtns.forEach((btn) => {
     btn.addEventListener('click', (e) => {
-        // 取的目前點擊到按鈕的值
+
+        // 取得目前點擊到按鈕的值
         const numBtn_value = e.target.dataset.num;
+
+        // 取得當前去除非數字後的字串資料
+        const trim_currentValStr = get_outputValStr().replace(/[\W_]/g, '');
+        console.log(get_outputValStr());
+
+        let valueStr_length = trim_currentValStr.length;
+
+
+        // 如果開始輸入第一個數字按鈕的話，就把清除按鈕內容改為 'C'
+        if (numBtn_value) {
+            clear_btn.textContent = 'C';
+        };
+
+
+        // 如果當前的輸出數字字串長度達到 9 ，就中斷數字按鈕點擊
+        if (valueStr_length === 9) return;
+
 
         // 使用 toString() 將值轉為字串
         numberPress(numBtn_value.toString());
@@ -220,18 +243,25 @@ operatorBtns.forEach((btn) => {
 decimal_btn.addEventListener('click', () => {
     const currentValStr = get_outputValStr();
 
+    // 當輸出數字字串長度達到 9 的時候，中斷小數點輸入
+    if (currentValStr.length === 9) {
+        return;
+    }
+
     // 設置防呆，限制 '.'只能輸入一次
     if (!currentValStr.includes('.')) {
         //如果當前字串資料裡面沒有 '.'，就補上
-        set_outputValStr(currentValStr + '.')
+        set_outputValStr(currentValStr + '.');
     };
 });
 
 
 //  清除按鈕綁定監聽
 clear_btn.addEventListener('click', () => {
+
     // 恢復預設值為 '0'
     set_outputValStr('0');
+    clear_btn.textContent = 'AC';
 });
 
 // // 正負按鈕綁定監聽
@@ -262,7 +292,7 @@ percent_btn.addEventListener('click', () => {
     const currentOutputNum = get_outputValNum();
 
     // 資料要變成 '數字型別' 才能運算
-    const newValueNum = currentOutputNum / 100;
+    const newValueNum = parseFloat((currentOutputNum / 100).toPrecision(12));
 
     // 最後將運算完的 '數字型別轉型為字串'
     set_outputValStr(newValueNum.toString());
@@ -276,12 +306,14 @@ equal_btn.addEventListener('click', () => {
     if (storeValStr) {
         set_outputValStr(get_operatorResultStr());
 
-        console.log(storeValStr, storeOperator);
         //按下等於並清空暫存 字串和運算符
         storeValStr = null;
         storeOperator = null;
     };
 });
+
+
+
 
 
 

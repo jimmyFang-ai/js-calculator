@@ -99,6 +99,20 @@ locales和參數自定義函數的options行為，並讓應用程序指定應使
 
 ```javaScript
 
+// 會四捨五入到小數點後第三位
+// 會自動將數字四捨五入到小數點後第三位，再轉成字串
+const number = 123.2286;
 
+console.log(number.toLocaleString()); // '123.229'
+
+// 千分位會加上','
+const number = 1234.2286;
+
+console.log(number.toLocaleString()); // '1,234.229'
 
 ```
+
+處理 0.1 + 0.2 問題
+### toPrecision(12)
+
+parseFloat(newValueNum.toPrecision(12)).toString()

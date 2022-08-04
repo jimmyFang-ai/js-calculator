@@ -38,7 +38,7 @@ img {
 
 .phone-container {
   background: var(--black);
-  width: 300px;
+  width: 320px;
   border-radius: 50px;
   padding: 8px 16px;
   margin: 20px;
@@ -130,17 +130,19 @@ img {
 
 .calc-btn-zero {
   width: 48%;
-  border-radius: 55px;
+  border-radius: 50px;
 }
 
 .output-value {
   width: 100%;
   text-align: right;
-  padding: 8px 10px;
+  line-height: 100px;
+  padding: 0 10px;
   font-size: 60px;
   font-weight: 300;
   overflow: hidden;
   white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .decoline {
