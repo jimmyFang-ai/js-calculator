@@ -1,0 +1,153 @@
+
+//root variables
+:root {
+   --black:  black;
+   --gray:   #a5a5a5b0;
+   --orange:    #f1a33c;
+   --white:    white;
+   --light-black:    #333;
+}
+
+
+// reset
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+body {
+   font-family: "Helvetica Neue" , sans-serif;
+   color: var(--white);
+}
+
+img {
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+
+.wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+
+// 計算機容器
+.phone-container {
+  background: var(--black);
+  width: 300px;
+  border-radius: 50px;
+  padding: 8px 16px;
+  margin: 20px;
+}
+
+
+ //手機狀態欄 
+.phone-statusBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 60px;
+}
+
+
+// 計算機
+ .phone-calculator {
+    padding: 10px;
+    margin-bottom: 40px;
+}
+
+
+.row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+
+// 按鈕基本架構
+.calc-btn {
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: var(--white);
+  color: var(--black);
+  cursor: pointer;
+  user-select: none; // 避免用戶選取
+  transition: .2s;
+}
+
+
+// 運算按鈕
+.calc-btn-operator {
+  background-color: var(--orange);
+  color: var(--white);
+
+  &:hover , &:active ,&:focus{
+    background-color: var(--white);
+    color: var(--orange);
+  }
+}
+
+
+// 功能按鈕
+.calc-btn-function {
+  background-color: var(--gray);
+  color: var(--black);
+
+  &:hover ,&:active, &:focus{
+    background-color: #ffffffe6;
+    color: var(--black);
+  }
+}
+
+// 數字按鈕
+.calc-btn-num ,.calc-btn-decimal{
+  background-color: var(--light-black);
+  color: var(--white);
+
+  &:hover , &:active, &:focus{
+    background-color: var(--gray);
+  }
+}
+
+
+// 數字 0 按鈕
+.calc-btn-zero {
+  width: 48%;
+  border-radius: 55px;
+}
+
+
+
+// 運算結果顯示欄位
+.output-value {
+  width: 100%;
+  text-align: right;
+  padding: 8px 10px;
+  font-size: 60px;
+  font-weight: 300;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+
+
+//計算機底線  
+.decoline {
+    background-color: var(--white);
+    width: 130px;
+    height: 5px;
+    border-radius: 4px;
+    margin: auto;
+}
