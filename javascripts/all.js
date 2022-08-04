@@ -185,7 +185,6 @@ function checkStrLength(valueStr) {
     // 字串長度超過六以上就改變 文字大小
     if (valueStr_length > 6 && valueStr_length <= 9) {
         output_val.style.fontSize = '40px';
-        output_val.style.overflow = 'hidden';
     };
 }
 
