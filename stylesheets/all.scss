@@ -83,7 +83,7 @@ img {
   background-color: var(--white);
   color: var(--black);
   cursor: pointer;
-  user-select: none; // 避免用戶選取
+  user-select: none; // 避免選取時，出現反白效果
   transition: .2s;
 }
 

@@ -88,6 +88,7 @@ function get_operatorResultStr() {
     };
 
 
+
     //  回傳運算後結果並轉為字串型別
     //  計算 JS小數精度運算
     //   1. toPrecision()方法，將數字型別內的小數點後的數字，設定有效位數12位， 超過的部分會四捨五入，最後會回傳String型態資料
@@ -120,7 +121,7 @@ function set_outputValStr(valueStr) {
     }
 
 
-    // 檢驗目前計算機字串的資料長度
+    // 依據目前輸出的資料長度改變字串大小
     changeStrSize(valueStr);
 };
 
@@ -155,9 +156,9 @@ function operatorPress(operation) {
         storeOperator = operation;
         // 並設定初始值為 '0'
         set_outputValStr('0');
+        console.log(operation, storeValStr);
         return;
     };
-
 
     // 儲存運算後結果
     storeValStr = get_operatorResultStr();
@@ -178,7 +179,7 @@ function changeStrSize(valueStr) {
     let trim_string = valueStr.replace(/[\W_]/g, ''); //把非數字字串都去除掉，回傳純數字字串
     let valueStr_length = trim_string.length;
 
-    console.log(valueStr_length);
+
 
     // 字串長度超過六以上就改變 文字大小
     if (valueStr_length >= 9) {
@@ -207,7 +208,6 @@ numberBtns.forEach((btn) => {
 
         // 取得當前去除非數字後的字串資料
         const trim_currentValStr = get_outputValStr().replace(/[\W_]/g, '');
-        console.log(get_outputValStr());
 
         let valueStr_length = trim_currentValStr.length;
 
@@ -259,9 +259,11 @@ decimal_btn.addEventListener('click', () => {
 //  清除按鈕綁定監聽
 clear_btn.addEventListener('click', () => {
 
-    // 恢復預設值為 '0'
+    // 恢復預設值
     set_outputValStr('0');
     clear_btn.textContent = 'AC';
+    storeValStr = null;
+    storeOperator = null;
 });
 
 // // 正負按鈕綁定監聽
@@ -296,6 +298,11 @@ percent_btn.addEventListener('click', () => {
 
     // 最後將運算完的 '數字型別轉型為字串'
     set_outputValStr(newValueNum.toString());
+
+
+    // 將儲存資料狀態恢復初始值
+    storeValStr = null;
+    storeOperator = null;
 });
 
 
