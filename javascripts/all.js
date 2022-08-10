@@ -88,7 +88,6 @@ function get_operatorResultStr() {
     };
 
 
-
     //  回傳運算後結果並轉為字串型別
     //  計算 JS小數精度運算
     //   1. toPrecision()方法，將數字型別內的小數點後的數字，設定有效位數12位， 超過的部分會四捨五入，最後會回傳String型態資料
@@ -137,7 +136,6 @@ function numberPress(numStr) {
     if (currentValStr === '0') {
         set_outputValStr(numStr);
     } else {
-
         // 如果當前資料狀態不是 0 的話，將 '當前數字字串' 和 '點擊到數字字串'相加
         set_outputValStr(currentValStr + numStr);
     };
@@ -150,13 +148,12 @@ function operatorPress(operation) {
     const currentValStr = get_outputValStr();
 
 
-    // 如果有點擊到運算按鈕的話，將'字串資料' 和 '運算資料儲存'
-    if (!storeOperator) {
+    // 如果點擊到運算按鈕的話，將'字串資料' 和 '運算資料儲存'
+    if (!storeValStr) {
         storeValStr = currentValStr;
         storeOperator = operation;
         // 並設定初始值為 '0'
         set_outputValStr('0');
-        console.log(operation, storeValStr);
         return;
     };
 
@@ -233,7 +230,6 @@ operatorBtns.forEach((btn) => {
     btn.addEventListener('click', (e) => {
         // 取的目前點擊到按鈕的值
         const operatorBtn_value = e.target.dataset.operator;
-
         operatorPress(operatorBtn_value);
     });
 });
@@ -318,9 +314,6 @@ equal_btn.addEventListener('click', () => {
         storeOperator = null;
     };
 });
-
-
-
 
 
 
