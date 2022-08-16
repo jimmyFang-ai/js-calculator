@@ -317,7 +317,3 @@ equal_btn.addEventListener('click', () => {
 
 
 
-
-
-
-

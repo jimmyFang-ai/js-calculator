@@ -5,6 +5,10 @@
 ![](https://i.imgur.com/UKp0ecN.jpg)
 
 
+Demo: https://jimmyfang-ai.github.io/js-calculator/
+
+
+
 ## **計算機功能:**
   
 
